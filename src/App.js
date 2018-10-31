@@ -15,7 +15,13 @@ class BooksApp extends React.Component {
      */
     //showSearchPage: false
   }
+  getAllBooks =() =>{
+    BooksAPI.getAll()
+    .then(() =>{
+      
+    })
 
+  }
   render() {
     return (
       <div>
