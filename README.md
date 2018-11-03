@@ -4,7 +4,7 @@
 # Steps to run the project :
 1. Clone the below GIT repository
 https://github.com/sowmi546/MyReadsApp.git
-and navigate to MyReadsApp folder
+and navigate to MyReadsApp folder using command  `cd MyReadsApp`
 
 
 2. Install all project dependencies with `npm install`
