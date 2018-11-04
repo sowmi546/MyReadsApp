@@ -3,29 +3,15 @@ import {Link} from 'react-router-dom';
 import * as BooksAPI from './BooksAPI'
 import './App.css'
 import Book from './Book.js';
+
+
 class SearchPage extends Component{
 state={
   query:'',
   resultBooks:[],
+  books:[],
   emptySearch:false
 }
-
-updateQuery =(query) =>{
-  this.setState (() =>({
-    query: query,
-  }))
-  if(query){
-    BooksAPI.search(query.trim())
-    .then(books =>{
-    	books.length>0 ? this.setState({resultBooks:books, emptySearch:false}) : this.setState({resultBooks:[], emptySearch:true})
-
-    });
-  }
-  else {
-    this.setState({resultBooks:[]});
-  }
-
-};
 componentDidMount(){
       BooksAPI.getAll()
       .then((books) =>{
@@ -36,6 +22,27 @@ componentDidMount(){
       })
 
   }
+
+updateQuery =(query) =>{
+  this.setState (() =>({
+    query: query,
+  }))
+  if(query){
+    BooksAPI.search(query.trim())
+    .then(books =>{
+      if(query===this.state.query){
+        books.length>0 ? this.setState({resultBooks:books, emptySearch:false}) : this.setState({resultBooks:[], emptySearch:true})
+
+      }
+
+    });
+  }
+  else {
+    this.setState({resultBooks:[]});
+  }
+
+};
+
 
   searchChangeShelf = (updatedBook, newShelf) =>{
 
@@ -49,7 +56,7 @@ componentDidMount(){
   }
 
 render(){
-  const {resultBooks,emptySearch} = this.state;
+  const {resultBooks,emptySearch,books} = this.state;
   return(
 
     <div>
@@ -70,7 +77,7 @@ render(){
 
           <ol className="books-grid">
             {resultBooks.map(book =>(
-                <Book book={book} key ={book.id} changeShelf={this.searchChangeShelf} />
+                <Book books={books} book={book} key ={book.id} changeShelf={this.searchChangeShelf} shelf={book.shelf}/>
 
 
             ))}
@@ -87,4 +94,5 @@ render(){
 
 
 }
+
 export default SearchPage;

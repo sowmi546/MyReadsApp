@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 class ShelfChanger extends Component{
 
     state = {
-        currentShelf: this.props.book.shelf,
+        currentShelf: this.props.shelf,
 
     };
 
@@ -18,10 +18,20 @@ class ShelfChanger extends Component{
 
 
     render(){
+       const {book,books } = this.props;
+       //setting default value for shelf
+       let currentShelf ='none';
+       //getting the shelf to which the book belongs to from the homepage and marking the shelf for it
+       for (let result of books) {
+      if (book.id === result.id) {
+        currentShelf = result.shelf;
+        break;
+      }
+       }
         return(
             <div className="book-shelf-changer">
                 <select
-                    value={this.state.currentShelf}
+                    value={currentShelf}
                     onChange={this.changeShelf}
                 >
                     <option value="move" disabled>Move to...</option>
